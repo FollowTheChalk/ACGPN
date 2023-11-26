@@ -13,7 +13,7 @@ class BaseOptions():
         # experiment specifics
         self.parser.add_argument('--name', type=str, default='label2city',
                                  help='name of the experiment. It decides where to store samples and models')
-        self.parser.add_argument('--gpu_ids', type=str, default='0,1,2,3',
+        self.parser.add_argument('--gpu_ids', type=str, default='0', #default='0,1,2,3',
                                  help='gpu ids: e.g. 0  0,1,2, 0,2. use -1 for CPU')
         self.parser.add_argument('--checkpoints_dir', type=str,
                                  default='./checkpoints', help='models are saved here')
@@ -45,6 +45,8 @@ class BaseOptions():
         # for setting inputs
         self.parser.add_argument(
             '--dataroot', type=str, default='Data_preprocessing/')
+                #root directory is where train.py or test.py is
+        
         self.parser.add_argument('--datapairs', type=str, default='test_pairs.txt',
                                  help='train_pairs.txt/test_pairs.txt/test_pairs_same.txt etc.')
 
@@ -98,7 +100,7 @@ class BaseOptions():
             id = int(str_id)
             if id >= 0:
                 self.opt.gpu_ids.append(id)
-
+        self.opt.gpu_ids = [0]
         # set gpu ids
         if len(self.opt.gpu_ids) > 0:
             torch.cuda.set_device(self.opt.gpu_ids[0])
